@@ -23,7 +23,7 @@ public class DOMWriter {
             newDoc.appendChild(rootElement);
 
             for (int i = 0; i < listWithResult.size(); i++) {
-                Element questions = CreaterFormatForDOMWriter.createQuestionElement(listWithResult.get(i), newDoc, i, tag);
+                Element questions = CreateAnswerForDOMWriter.createQuestionElement(listWithResult.get(i), newDoc, i, tag);
                 rootElement.appendChild(questions);
             }
 
@@ -39,6 +39,7 @@ public class DOMWriter {
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         return transformer;
     }
 
@@ -48,4 +49,5 @@ public class DOMWriter {
         StreamResult file = new StreamResult(new File("Answer.xml"));
         transformer.transform(source, file);
     }
+
 }
