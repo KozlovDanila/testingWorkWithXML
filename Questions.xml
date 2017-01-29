@@ -1,0 +1,29 @@
+<Questions>
+    <Question number="1" text="Вопрос 1">
+        <Answer number="1" text="Текст ответа 1" right="true"/>
+        <Answer number="2" text="Текст ответа 2" right="false"/>
+        <Answer number="3" text="Текст ответа 3" right="false"/>
+        <Answer number="4" text="Текст ответа 4" right="false"/>
+    </Question>
+
+    <Question number="2" text="Вопрос 2">
+        <Answer number="1" text="Текст ответа 1" right="true"/>
+        <Answer number="2" text="Текст ответа 2" right="true"/>
+        <Answer number="3" text="Текст ответа 3" right="false"/>
+        <Answer number="4" text="Текст ответа 4" right="false"/>
+    </Question>
+
+    <Question number="3" text="Вопрос 3">
+        <Answer number="1" text="Текст ответа 1" right="false"/>
+        <Answer number="2" text="Текст ответа 2" right="false"/>
+        <Answer number="3" text="Текст ответа 3" right="true"/>
+        <Answer number="4" text="Текст ответа 4" right="false"/>
+    </Question>
+
+    <Question number="4" text="Вопрос 4">
+        <Answer number="1" text="Текст ответа 1" right="true"/>
+        <Answer number="2" text="Текст ответа 2" right="true"/>
+        <Answer number="3" text="Текст ответа 3" right="false"/>
+        <Answer number="4" text="Текст ответа 4" right="true"/>
+    </Question>
+</Questions>

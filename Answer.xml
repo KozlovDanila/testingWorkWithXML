@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Questions>
+    <Question number="1" succes="true" text="Вопрос 1">
+        <Answer number="1" text="Текст ответа 1"/>
+    </Question>
+    <Question number="2" succes="false" text="Вопрос 2"/>
+    <Question number="3" succes="false" text="Вопрос 3"/>
+    <Question number="4" succes="false" text="Вопрос 4"/>
+</Questions>
