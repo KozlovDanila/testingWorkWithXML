@@ -32,25 +32,26 @@ public class ParserAnswerUtils {
         return count;
     }
 
-    public static boolean checkCorrectInputData(Document doc) {
+    public static boolean checkCorrectInputData(Document doc, int index) {
+        WorkerTag questionTag = new WorkerTag(doc, "Question");
+        NodeList answerList = questionTag.getList(index-1, "Answer");
         String str = MyGUI.getAnswer();
-        boolean validInput = false;
+
         if (str.length() == 0) {
-            return validInput;
+            return false;
         }
 
-        validInput = checkSymbol(str);
-        validInput = checkInputBorder(doc, str);
-
-        return validInput;
+        if(!checkSymbol(str) || !checkInputBorder(str, answerList)){
+            return false;
+        }
+        return true;
     }
 
-    private static boolean checkInputBorder(Document doc, String str) {
+    private static boolean checkInputBorder(String str, NodeList list) {
         String[] answers = getAnswers(str);
-        WorkerTag questionTag = new WorkerTag(doc, "Question");
-        for (String element : answers) {
-            if (!element.equals("")) {
-                if (Integer.parseInt(element) < 1 || Integer.parseInt(element) > questionTag.getLength()) {
+        for (int i = 0;i < answers.length; i++) {
+            if (!answers[i].equals("")) {
+                if (Integer.parseInt(answers[i]) < 1 || Integer.parseInt(answers[i]) > list.getLength()) {
                     return false;
                 }
             }

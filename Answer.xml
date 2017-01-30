@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Questions>
     <Question number="1" succes="true" text="Вопрос 1">
-        <Answer number="1" text="Текст ответа 1"/>
+        <Answer number="1" text="Текст ответа d"/>
     </Question>
-    <Question number="2" succes="false" text="Вопрос 2"/>
-    <Question number="3" succes="false" text="Вопрос 3"/>
-    <Question number="4" succes="false" text="Вопрос 4"/>
+    <Question number="2" succes="false" text="Вопрос 2">
+        <Answer number="1" text="Текст ответа d"/>
+        <Answer number="2" text="Текст ответа d"/>
+    </Question>
+    <Question number="3" succes="false" text="Вопрос 3">
+        <Answer number="2" text="Текст ответа d"/>
+        <Answer number="1" text="Текст ответа d"/>
+    </Question>
+    <Question number="4" succes="true" text="Вопрос 4">
+        <Answer number="1" text="Текст ответа d"/>
+        <Answer number="2" text="Текст ответа d"/>
+        <Answer number="4" text="Текст ответа d"/>
+    </Question>
 </Questions>

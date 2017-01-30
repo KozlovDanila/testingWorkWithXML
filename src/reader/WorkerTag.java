@@ -25,8 +25,8 @@ public class WorkerTag {
 
     public NodeList getList(int index, String listName) {
         Node list = getTag().item(index);
-        Element question = (Element) list;
-        return question.getElementsByTagName(listName);
+        Element element = (Element) list;
+        return element.getElementsByTagName(listName);
     }
 
     public String getQuestion(int index) {

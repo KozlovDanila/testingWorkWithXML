@@ -65,7 +65,7 @@ public class MyGUI extends JFrame {
 
     public void updateQuestion(Document doc) {
         String str = tag.getQuestion(index);
-        if (!ParserAnswerUtils.checkCorrectInputData(doc)) {
+        if (!ParserAnswerUtils.checkCorrectInputData(doc, index)) {
             messages = new CorrectInputData();
             messages.message();
         } else {
@@ -87,7 +87,7 @@ public class MyGUI extends JFrame {
         boolean resultAnswer;
         String[] resultInput;
         resultInput = ParserAnswerUtils.getAnswers(MyGUI.getAnswer());
-        resultAnswer = ParserAnswerUtils.checkAnswers(tag.getList(MyGUI.getIndexQuestion() - 1, "Answer"), resultInput, tag);
+        resultAnswer = ParserAnswerUtils.checkAnswers(tag.getList(MyGUI.getIndexQuestion()-1, "Answer"), resultInput, tag);
         if (resultAnswer == true) {
             countTrueAnswer++;
         }
