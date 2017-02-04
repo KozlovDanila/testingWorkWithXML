@@ -1,7 +1,5 @@
 package workWithAnswers;
 
-import java.util.Arrays;
-
 public class BoxAnswerResult {
     private String[] answers;
     private boolean answerResult;
@@ -17,14 +15,5 @@ public class BoxAnswerResult {
 
     public String[] getAnswers() {
         return answers;
-    }
-
-
-    @Override
-    public String toString() {
-        return "workWithAnswers.BoxAnswerResult{" +
-                "answers=" + Arrays.toString(answers) +
-                ", answerResult=" + answerResult +
-                '}';
     }
 }
