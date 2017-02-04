@@ -8,26 +8,23 @@ import org.w3c.dom.*;
 
 public class App {
 
-    private static MyGUI gui;
-
     public static void main(String[] args) {
+
+        MyGUI gui = null;
+        Document doc = null;
 
         try {
             DOMReader.createDoc("Questions.xml");
-            Document doc = DOMReader.getDocument();
-
-            gui = new MyGUI(doc);
-            gui.addElements();
-            gui.makeListener(doc);
+            doc = DOMReader.getDocument();
         } catch (Exception ex) {
             Messages messages = new FileNotFound();
             messages.message();
             System.exit(0);
         }
-        gui.setVisible(true);
-    }
 
-    public static int getCountOfTrueAnswer() {
-        return gui.getCountTrueAnswer();
+        gui = new MyGUI(doc);
+        gui.addElements();
+        gui.makeListener(doc);
+        gui.setVisible(true);
     }
 }

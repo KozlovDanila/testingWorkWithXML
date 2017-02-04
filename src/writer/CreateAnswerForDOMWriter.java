@@ -1,8 +1,8 @@
 package writer;
 
-import GUI.MyGUI;
 import org.w3c.dom.*;
 import reader.WorkerTag;
+import workWithAnswers.Answer;
 import workWithAnswers.BoxAnswerResult;
 
 public class CreateAnswerForDOMWriter {
@@ -10,28 +10,28 @@ public class CreateAnswerForDOMWriter {
     public CreateAnswerForDOMWriter() {
     }
 
-    public static Element createQuestionElement(BoxAnswerResult boxAnswerResult, Document newDoc, int index, WorkerTag tag) {
+    public static Element createQuestionElement(BoxAnswerResult boxAnswerResult, Document newDoc, int index, WorkerTag tag, Answer answer) {
         Element question = newDoc.createElement("Question");
         createAttrQuestion(boxAnswerResult, newDoc, index, question, tag);
-        addAnswer(boxAnswerResult, newDoc, index, question, tag);
+        addAnswer(boxAnswerResult, newDoc, question, tag, answer);
         return question;
     }
 
-    private static void addAnswer(BoxAnswerResult boxAnswerResult, Document newDoc, int index, Element question, WorkerTag tag) {
+    private static void addAnswer(BoxAnswerResult boxAnswerResult, Document newDoc, Element question, WorkerTag tag, Answer answer) {
         String[] answersStr = boxAnswerResult.getAnswers();
-        NodeList answerList = tag.getList(MyGUI.getIndexQuestion() - 1, "Answer");
+        NodeList answerList = tag.getList(answer.getIndex() - 1, "Answer");
 
         for (int i = 0; i < answersStr.length; i++) {
-            Element answer = newDoc.createElement("Answer");
+            Element answerElement = newDoc.createElement("Answer");
             String answerText = "";
             Node answerNode = answerList.item(Integer.parseInt(answersStr[i]) - 1);
             if (answerNode.getNodeType() == answerNode.ELEMENT_NODE) {
                 Element answerN = (Element) answerNode;
                 answerText = answerN.getAttribute("text");
             }
-            answer.setAttributeNode(setAttr(newDoc, "number", answersStr[i]));
-            answer.setAttributeNode(setAttr(newDoc, "text", answerText));
-            question.appendChild(answer);
+            answerElement.setAttributeNode(setAttr(newDoc, "number", answersStr[i]));
+            answerElement.setAttributeNode(setAttr(newDoc, "text", answerText));
+            question.appendChild(answerElement);
         }
     }
 

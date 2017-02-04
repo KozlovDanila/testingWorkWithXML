@@ -1,9 +1,11 @@
 package MessagePackage;
 
 import org.w3c.dom.Document;
+import workWithAnswers.ResponseHandler;
 
-public interface Messages {
-    void message();
+public abstract class Messages {
+    abstract public void message();
 
-    void getCount(Document doc);
+    public void getCount(Document doc, ResponseHandler handlerQuestion) {
+    }
 }

@@ -1,7 +1,9 @@
 package writer;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import reader.WorkerTag;
+import workWithAnswers.Answer;
 import workWithAnswers.BoxAnswerResult;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -14,7 +16,7 @@ import java.util.List;
 
 public class DOMWriter {
 
-    public static void createResultXML(List<BoxAnswerResult> listWithResult, WorkerTag tag) {
+    public static void createResultXML(List<BoxAnswerResult> listWithResult, WorkerTag tag, Answer lastAnswer) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -23,7 +25,7 @@ public class DOMWriter {
             newDoc.appendChild(rootElement);
 
             for (int i = 0; i < listWithResult.size(); i++) {
-                Element questions = CreateAnswerForDOMWriter.createQuestionElement(listWithResult.get(i), newDoc, i, tag);
+                Element questions = CreateAnswerForDOMWriter.createQuestionElement(listWithResult.get(i), newDoc, i, tag, lastAnswer);
                 rootElement.appendChild(questions);
             }
 

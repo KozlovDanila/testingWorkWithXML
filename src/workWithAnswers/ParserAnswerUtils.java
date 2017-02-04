@@ -1,12 +1,14 @@
 package workWithAnswers;
 
-import GUI.MyGUI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import reader.WorkerTag;
 
 public class ParserAnswerUtils {
+
+    public ParserAnswerUtils() {
+    }
 
     public static boolean checkAnswers(NodeList answerListXML, String[] answersUser, WorkerTag tag) {
         if (getCountTrueAnswer(answerListXML, tag) != answersUser.length) {
@@ -32,10 +34,10 @@ public class ParserAnswerUtils {
         return count;
     }
 
-    public static boolean checkCorrectInputData(Document doc, int index) {
+    public static boolean checkCorrectInputData(Document doc, Answer answer) {
         WorkerTag questionTag = new WorkerTag(doc, "Question");
-        NodeList answerList = questionTag.getList(index-1, "Answer");
-        String str = MyGUI.getAnswer();
+        NodeList answerList = questionTag.getList(answer.getIndex()-1, "Answer");
+        String str = answer.getElement();
 
         if (str.length() == 0) {
             return false;

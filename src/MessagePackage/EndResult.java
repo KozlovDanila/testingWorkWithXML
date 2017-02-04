@@ -1,19 +1,20 @@
 package MessagePackage;
 
-import app.App;
 import org.w3c.dom.Document;
-import reader.DOMReader;
 import reader.WorkerTag;
+import workWithAnswers.ResponseHandler;
 
 import javax.swing.*;
 
-public class EndResult implements Messages {
+public class EndResult extends Messages {
 
-    private static int countOfQuestin;
+    private int countOfQuestin;
+    private int countTrueAnswer;
 
-    public void getCount(Document doc) {
+    public void getCount(Document doc, ResponseHandler handler) {
         WorkerTag questionTag = new WorkerTag(doc, "Question");
         countOfQuestin = questionTag.getLength();
+        countTrueAnswer = handler.getCountTrueAnswer();
     }
 
     @Override
@@ -21,7 +22,7 @@ public class EndResult implements Messages {
         JOptionPane.showMessageDialog(new JFrame(),
                 "<html>Всего вопросов: " +
                         +countOfQuestin + "<br>" +
-                        "Правильных ответов: " + App.getCountOfTrueAnswer() + "</html>");
+                        "Правильных ответов: " + countTrueAnswer + "</html>");
         System.exit(0);
     }
 }
