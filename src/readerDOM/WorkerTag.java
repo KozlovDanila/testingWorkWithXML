@@ -1,4 +1,4 @@
-package reader;
+package readerDOM;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,28 +29,9 @@ public class WorkerTag {
         return element.getElementsByTagName(listName);
     }
 
-    public String getQuestion(int index) {
-        String res = "<html>";
-
-        if (index >= getLength()) {
-            return "-1";
-        } else {
-
-            Element question = getElement(list, index);
-            res += getTextByElement(question, "text");
-            NodeList answerList = question.getElementsByTagName("Answer");
-            for (int answerIndex = 0; answerIndex < answerList.getLength(); answerIndex++) {
-                Element answer = getElement(answerList, answerIndex);
-                res += getTextByElement(answer, "text");
-            }
-        }
-
-        return res + "</html>";
-    }
-
-    private String getTextByElement(Element element, String text) {
+    public String getTextByElement(Element element, String text) {
         if (element != null) {
-            return element.getAttribute(text) + "<br>";
+            return element.getAttribute(text) + "\n";
         }
         return "";
     }
@@ -65,7 +46,7 @@ public class WorkerTag {
         return null;
     }
 
-    public int getLength() {
+    public int getCountQuestions() {
         return list.getLength();
     }
 }

@@ -1,19 +1,14 @@
 <Questions>
-    <Question number="1" text="Вопрос 1">
+    <Question number="1" text="Текст вопроса">
         <Answer number="1" text="Текст ответа a" right="true"/>
     </Question>
 
-    <Question number="2" text="Вопрос 2">
+    <Question number="2" text="Текст вопроса">
         <Answer number="1" text="Текст ответа b" right="true"/>
         <Answer number="3" text="Текст ответа b" right="false"/>
     </Question>
 
-    <Question number="3" text="Вопрос 3">
-        <Answer number="1" text="Текст ответа c" right="false"/>
-        <Answer number="2" text="Текст ответа c" right="false"/>
-    </Question>
-
-    <Question number="4" text="Вопрос 4">
+    <Question number="4" text="Текст вопроса">
         <Answer number="1" text="Текст ответа d" right="true"/>
         <Answer number="2" text="Текст ответа d" right="true"/>
         <Answer number="3" text="Текст ответа d" right="false"/>

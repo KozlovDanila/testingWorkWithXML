@@ -3,28 +3,32 @@ package GUI;
 import MessagePackage.CorrectInputData;
 import MessagePackage.EndResult;
 import MessagePackage.Messages;
-import reader.WorkerTag;
-import workWithAnswers.Answer;
-import workWithAnswers.ParserAnswerUtils;
+import MessagePackage.StoreMessages;
+import Utils.Updater;
+import controlers.ResponseHandler;
+import models.Answer;
+import models.Question;
 import org.w3c.dom.Document;
-import workWithAnswers.ResponseHandler;
-import writer.DOMWriter;
+import org.w3c.dom.Element;
+import readerDOM.WorkerTag;
+import writerDOM.DOMWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.InputMismatchException;
 
 public class MyGUI extends JFrame {
 
-    private JTextField textAnswer;
-    private JLabel textQuestion;
+    private JTextField textAnswerField;
+    private JTextArea textQuestionField;
     private JButton button;
 
-    private int indexOfQuestion = 1;
+    private int indexQuestion = 1;
 
     private ResponseHandler handlerQuestion;
-    private WorkerTag tag;
+    private WorkerTag workerTag;
 
     public MyGUI(Document doc) {
 
@@ -35,17 +39,18 @@ public class MyGUI extends JFrame {
         setBounds(positionXOnWindow, positionYOnWindow, (int) dim.getWidth(), (int) dim.getHeight());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         handlerQuestion = new ResponseHandler();
-        tag = new WorkerTag(doc, "Question");
+        workerTag = new WorkerTag(doc, "Question");
     }
 
     public void addElements() {
+        textAnswerField = new JTextField();
+        add(textAnswerField, BorderLayout.NORTH);
 
-        textAnswer = new JTextField();
-        textQuestion = new JLabel(tag.getQuestion(0));
+        Question question = new Question((Element) workerTag.getNode(0), workerTag);
+        textQuestionField = new JTextArea("Здравствуйте. Пройдите тестирование!\n" + question.getFullQuestionWithAnswers());
+        add(textQuestionField, BorderLayout.CENTER);
+
         button = new JButton("Ответить!");
-
-        add(textAnswer, BorderLayout.NORTH);
-        add(textQuestion, BorderLayout.CENTER);
         add(button, BorderLayout.EAST);
     }
 
@@ -53,34 +58,33 @@ public class MyGUI extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateQuestion(doc);
+
+                Answer answer = new Answer(textAnswerField.getText(), indexQuestion);
+                if (indexQuestion >= workerTag.getCountQuestions()) {
+                    handlerQuestion.addAnswer(workerTag, answer);
+                    DOMWriter writer = new DOMWriter();
+                    writer.createResultXML(handlerQuestion.getAnswerResultList(), workerTag, answer);
+                    Messages messages = new EndResult();
+                    StoreMessages.getCount(doc, handlerQuestion);
+                    messages.message();
+                }
+
+                try {
+                    Updater updater = new Updater();
+                    String nextQuestion = updater.updateQuestion(doc, answer, workerTag, handlerQuestion, indexQuestion);
+                    textQuestionField.setText(nextQuestion);
+                    indexQuestion++;
+                } catch (InputMismatchException ex) {
+                    Messages messages = new CorrectInputData();
+                    messages.message();
+                }
+
                 updateAnswer();
             }
         });
     }
 
-    public void updateQuestion(Document doc) {
-        Answer answer = new Answer(textAnswer.getText(), indexOfQuestion);
-        String str = tag.getQuestion(indexOfQuestion);
-
-        if (!ParserAnswerUtils.checkCorrectInputData(doc, answer)) {
-            Messages messages = new CorrectInputData();
-            messages.message();
-        } else {
-            handlerQuestion.addAnswer(tag, answer);
-            if (str.equals("-1")) {
-                DOMWriter.createResultXML(handlerQuestion.getAnswerResultList(), tag, answer);
-                Messages messages = new EndResult();
-                messages.getCount(doc, handlerQuestion);
-                messages.message();
-            } else {
-                textQuestion.setText(str);
-                indexOfQuestion++;
-            }
-        }
-    }
-
     public void updateAnswer() {
-        textAnswer.setText("");
+        textAnswerField.setText("");
     }
 }

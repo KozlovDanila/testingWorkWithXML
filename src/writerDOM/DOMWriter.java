@@ -1,10 +1,9 @@
-package writer;
+package writerDOM;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import reader.WorkerTag;
-import workWithAnswers.Answer;
-import workWithAnswers.BoxAnswerResult;
+import readerDOM.WorkerTag;
+import models.Answer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class DOMWriter {
 
-    public static void createResultXML(List<BoxAnswerResult> listWithResult, WorkerTag tag, Answer lastAnswer) {
+    public void createResultXML(List<Answer> listWithResult, WorkerTag tag, Answer lastAnswer) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -25,7 +24,8 @@ public class DOMWriter {
             newDoc.appendChild(rootElement);
 
             for (int i = 0; i < listWithResult.size(); i++) {
-                Element questions = CreateAnswerForDOMWriter.createQuestionElement(listWithResult.get(i), newDoc, i, tag, lastAnswer);
+                CreaterAnswerForDOMWriter creater = new CreaterAnswerForDOMWriter();
+                Element questions = creater.createQuestionElement(listWithResult.get(i), newDoc, i, tag, lastAnswer);
                 rootElement.appendChild(questions);
             }
 
@@ -36,7 +36,7 @@ public class DOMWriter {
         }
     }
 
-    private static Transformer createTransformer() throws TransformerConfigurationException {
+    private Transformer createTransformer() throws TransformerConfigurationException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
@@ -45,7 +45,7 @@ public class DOMWriter {
         return transformer;
     }
 
-    private static void addFile(Document newDoc) throws TransformerException {
+    private void addFile(Document newDoc) throws TransformerException {
         Transformer transformer = createTransformer();
         DOMSource source = new DOMSource(newDoc);
         StreamResult file = new StreamResult(new File("Answer.xml"));

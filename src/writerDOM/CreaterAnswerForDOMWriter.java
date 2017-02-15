@@ -1,23 +1,22 @@
-package writer;
+package writerDOM;
 
 import org.w3c.dom.*;
-import reader.WorkerTag;
-import workWithAnswers.Answer;
-import workWithAnswers.BoxAnswerResult;
+import readerDOM.WorkerTag;
+import models.Answer;
 
-public class CreateAnswerForDOMWriter {
+public class CreaterAnswerForDOMWriter {
 
-    public CreateAnswerForDOMWriter() {
+    public CreaterAnswerForDOMWriter() {
     }
 
-    public static Element createQuestionElement(BoxAnswerResult boxAnswerResult, Document newDoc, int index, WorkerTag tag, Answer answer) {
+    public Element createQuestionElement(Answer boxAnswerResult, Document newDoc, int index, WorkerTag tag, Answer answer) {
         Element question = newDoc.createElement("Question");
         createAttrQuestion(boxAnswerResult, newDoc, index, question, tag);
         addAnswer(boxAnswerResult, newDoc, question, tag, answer);
         return question;
     }
 
-    private static void addAnswer(BoxAnswerResult boxAnswerResult, Document newDoc, Element question, WorkerTag tag, Answer answer) {
+    private void addAnswer(Answer boxAnswerResult, Document newDoc, Element question, WorkerTag tag, Answer answer) {
         String[] answersStr = boxAnswerResult.getAnswers();
         NodeList answerList = tag.getList(answer.getIndex() - 1, "Answer");
 
@@ -35,7 +34,7 @@ public class CreateAnswerForDOMWriter {
         }
     }
 
-    private static void createAttrQuestion(BoxAnswerResult boxAnswerResult, Document newDoc, int index, Element question, WorkerTag tag) {
+    private void createAttrQuestion(Answer boxAnswerResult, Document newDoc, int index, Element question, WorkerTag tag) {
         Node questionsNode = tag.getNode(index);
         if (questionsNode.getNodeType() == Node.ELEMENT_NODE) {
             Element questionNode = (Element) questionsNode;
@@ -46,15 +45,15 @@ public class CreateAnswerForDOMWriter {
         question.setAttributeNode(setAttr(newDoc, "number", index + 1 + ""));
     }
 
-    private static String getStateAnswer(BoxAnswerResult boxAnswerResult) {
-        if (boxAnswerResult.getAnswerResult() == true) {
+    private String getStateAnswer(Answer boxAnswerResult) {
+        if (boxAnswerResult.getAnswerState() == true) {
             return "true";
         } else {
             return "false";
         }
     }
 
-    private static Attr setAttr(Document doc, String name, String value) {
+    private Attr setAttr(Document doc, String name, String value) {
         Attr attr = doc.createAttribute(name);
         attr.setValue(value);
         return attr;
